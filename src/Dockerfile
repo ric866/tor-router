@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM alpine:latest
 
 # Install the required packages
 RUN apk add --update tor iptables sudo
@@ -7,7 +7,9 @@ RUN apk add --update tor iptables sudo
 EXPOSE 9001 9040 9050 5353/udp
 
 # Populate the tor-router configurations
-COPY . /opt/tor-router
+ADD https://raw.githubusercontent.com/ric866/tor-router/master/src/entrypoint.sh /opt/tor-router/entrypoint.sh
+ADD https://raw.githubusercontent.com/ric866/tor-router/master/src/iptables.rules /opt/tor-router/iptables.rules
+ADD https://raw.githubusercontent.com/ric866/tor-router/master/src/torrc /opt/tor-router/torrc
 
 # Set the container's WORKDIR and ENTRYPOINT
 WORKDIR /opt/tor-router
